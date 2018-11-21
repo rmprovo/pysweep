@@ -10,15 +10,14 @@ iplist = []
 def main():
     target_ip = input("Enter IP or CIDR: ")
 
-    ucodeip = (target_ip)
-
-    cidr = ipaddress.ip_network(ucodeip)
+    cidr = ipaddress.ip_network(target_ip)
 
     output = []
     for x in cidr:
         y = "fping -a -C 5 -q " + str(x)
         output.append(subprocess.getstatusoutput(y))
-                
+    
+          
     ip1 = []
     t1 = []
     t2 = []
