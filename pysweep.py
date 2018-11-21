@@ -16,8 +16,8 @@ def main():
     for x in cidr:
         y = "fping -a -C 5 -q " + str(x)
         output.append(subprocess.getstatusoutput(y))
-    
-          
+
+
     ip1 = []
     t1 = []
     t2 = []
@@ -31,7 +31,7 @@ def main():
                 num_lines += 1
                 fields = evrline.split(" ")
                 field1 = fields[0] #1
-                p1.appd = fields[1] #IP
+                ip1.appd = fields[1] #IP
                 field3 = fields[2] #:       
                 t1.append = fields[3] #T1
                 t2.append = fields[4] #T2
