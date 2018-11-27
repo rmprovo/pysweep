@@ -6,46 +6,61 @@ import re
 
 iplist = []
 
-
 def main():
     target_ip = input("Enter IP or CIDR: ")
 
     cidr = ipaddress.ip_network(target_ip)
-
-    output = []
+    
+    outputList = []
     for x in cidr:
         y = "fping -a -C 5 -q " + str(x)
-        output.append(subprocess.getstatusoutput(y))
+        outputList.append(subprocess.getstatusoutput(y))
 
+    with open("output.txt", "w+") as file:
+            for x in outputList:
+                    file.write(str(x).strip("'") + "\n")
+    file.close()
+    
+    output = open("output.txt", "r")
 
-    ip1 = []
+    onoff = []
+    ip = []
+    col = []
     t1 = []
     t2 = []
     t3 = []
     t4 = []
     t5 = []
     num_lines = 0
-
+   
     for evrline in output:
-        if re.match("(1(.*))", evrline):
+        if re.match(r"\([1]{1}(.*)\n", evrline):
                 num_lines += 1
-                fields = evrline.split(" ")
+                fields = evrline.split(' ')
                 field1 = fields[0] #1
-                ip1.appd = fields[1] #IP
+                field2 = fields[1] #IP
                 field3 = fields[2] #:       
-                t1.append = fields[3] #T1
-                t2.append = fields[4] #T2
-                t3.append = fields[5] #T3
-                t4.append = fields[6] #T4
-                t5.append = fields[7] #T5
-                
-    print(ip1)
+                field4 = fields[3] #T1
+                field5 = fields[4] #T2
+                field6 = fields[5] #T3
+                field7 = fields[6] #T4
+                field8 = fields[7] #T5
+                onoff.append(field1)
+                ip.append(field2)
+                col.append(field3)
+                t1.append(field4)
+                t2.append(field5)
+                t3.append(field6)
+                t4.append(field7)
+                t5.append(field8)  
+
+    for a, b, c, d, e, f in zip(ip, t1, t2, t3, t4, t5):
+            print("Host: " + (a).strip("'") + " is detected online. Response time(s) were: " + b + " " + c + " " + d + " " + e + " " + f)
+    print("The following hosts were found to be online and responding to ping requests:")
+    print("Detected Hosts:")
+    print("================")
+    for eachip in ip:
+            print(eachip.strip("'")) 
 
 if __name__== '__main__':
         main()
-    
-
-
-
-
-
